@@ -20,7 +20,8 @@
     "util": "^0.12.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "license": "MIT",
   "keywords": [],
