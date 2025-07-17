@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3004;
+const tripsRouter = require('./routes/trips'); // Load trips router once
+app.use('/api/trips', tripsRouter); // Use it once
 
 // Enable CORS for all origins (customize if needed)
 app.use(cors());

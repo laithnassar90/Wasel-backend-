@@ -5,5 +5,21 @@
 	logallrefupdates = true
 	ignorecase = true
 [remote "origin"]
-	url = https://github.com/YOUR_USERNAME/wasel-frontend.git
+	url = https://github.com/laithnassar90/Wasel-backend
 	fetch = +refs/heads/*:refs/remotes/origin/*
+
+
+module.exports = {
+  resolve: {
+    fallback: {
+      "path": require.resolve("path-browserify"),
+      "crypto": require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      "url": require.resolve("url/"),
+      "querystring": require.resolve("querystring-es3"),
+      "buffer": require.resolve("buffer/"),
+      "util": require.resolve("util/"),
+      "fs": false, // Disable fs since it's not needed in browser
+    },
+  },
+};
