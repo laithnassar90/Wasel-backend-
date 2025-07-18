@@ -1,45 +1,23 @@
-import { NodeGlobalsPolyfillPlugin, NodeModulesPolyfillPlugin } from 'vite-plugin-node-polyfills';
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [
-    react()
-  ],
-  resolve: {
-    alias: {
-      stream: 'stream-browserify',
-      buffer: 'buffer',
-      crypto: 'crypto-browserify',
-      util: 'util',
-      path: 'path-browserify',
-      url: 'url',
-      querystring: 'querystring-es3'
-    }
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        global: 'globalThis'
-      },
-      plugins: [
-        NodeGlobalsPolyfillPlugin({
-          buffer: true,
-          process: true
-        }),
-        NodeModulesPolyfillPlugin()
-      ]
-    }
-  },
+  plugins: [react()],
   server: {
-    port: 5173,
-    open: true,
     proxy: {
       '/api': {
         target: 'http://localhost:3001',
-        changeOrigin: true
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace(/^\/api/, ''),
+        ws: true,
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req) => {
+            console.log('Proxying request:', req.method, req.url);
+          });
+        }
       }
     }
-  },
-  build: {
-    outDir: 'dist'
   }
 });
